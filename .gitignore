@@ -1,0 +1,17 @@
+# dbt log and target folders
+logs/
+target/
+
+# Compiled models and temporary dbt files
+dbt_modules/
+dbt_packages/
+*.dbt
+
+# Python compiled files
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+
+# VSCode-specific files
+.vscode/

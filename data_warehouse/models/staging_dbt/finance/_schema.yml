@@ -1,0 +1,49 @@
+
+version: 2
+
+models:
+
+
+  - name: stg__finance__ledger
+    description: "fact table; raw data of all financial transactions"
+    columns:
+      - name: id
+        description: "unique identifier"
+        constraints:
+          - type: primary_key
+        data_tests:
+          - unique
+          - not_null
+      - name: year_month
+        description: "calendar year and month in the format of YYYY-MM"
+      - name: date
+        description: ""
+      - name: item
+        description: ""
+      - name: type
+        description: "type of transaction"
+      - name: cost
+        description: "value in PHP"
+      - name: to
+        description: "other party involved in the transaction"
+      - name: store
+        description: "store if `to` column is an establishment"
+      - name: source
+        description: "source of funds"
+      - name: _created_at
+        description: "datetime in UTC+0 timezone"
+      - name: _updated_at
+        description: "datetime in UTC+0 timezone"
+      - name: _inserted_at
+        description: "datetime in UTC+0 timezone"
+        data_tests:
+          - is_fresh:
+              interval: 1 day
+              tags: [check_freshness]
+      - name: _is_deleted
+        description: "identifier if the record is deleted from source"
+        data_tests:
+          - not_null
+          - accepted_values:
+              values: [TRUE, FALSE]
+              quote: false

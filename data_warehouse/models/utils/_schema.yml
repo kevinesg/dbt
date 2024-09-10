@@ -1,0 +1,16 @@
+
+version: 2
+
+models:
+  
+
+  - name: integers
+    description: "contains integers from 0 to 1 million"
+    columns:
+    - name: n
+
+
+  - name: dates
+    description: "contains dates from 2021-01-01 onwards"
+    columns:
+    - name: date

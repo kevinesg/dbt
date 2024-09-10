@@ -1,0 +1,163 @@
+
+version: 2
+
+models:
+
+
+  - name: daily_drinking_water_expenses
+    description: "contains average daily and current daily drinking water expenses"
+    columns:
+      - name: date
+        description: ""
+        data_tests:
+          - not_null
+          - unique
+      - name: daily_cost
+        description: "average cost in PHP by spreading each actual cost over preceding no-purchase days"
+      - name: average_daily_cost
+        description: "current daily average cost in PHP (as of the date field)"
+        data_tests:
+          - not_null
+
+
+  - name: daily_laundry_expenses
+    description: "contains average daily and current daily laundry expenses"
+    columns:
+      - name: date
+        description: ""
+        data_tests:
+          - not_null
+          - unique
+      - name: daily_cost
+        description: "average cost in PHP by spreading each actual cost over preceding no-purchase days"
+      - name: average_daily_cost
+        description: "current daily average cost in PHP (as of the date field)"
+        data_tests:
+          - not_null
+
+
+  - name: monthly_electricity_expenses
+    description: "contains monthly electricity expenses"
+    columns:
+      - name: year_month
+        description: "calendar year and month in the format of YYYY-MM"
+        data_tests:
+          - not_null
+      - name: cost
+        description: "monthly cost in PHP"
+
+
+  - name: monthly_food_deliveries
+    description: "contains monthly food delivery expenses"
+    columns:
+      - name: year_month
+        description: "calendar year and month in the format of YYYY-MM"
+        data_tests:
+          - not_null
+      - name: cost
+        description: "monthly cost in PHP"
+        data_tests:
+          - not_null
+
+
+  - name: monthly_food_expenses
+    description: "contains monthly food and grocery expenses"
+    columns:
+      - name: year_month
+        description: "calendar year and month in the format of YYYY-MM"
+        data_tests:
+          - not_null
+      - name: cost
+        description: "monthly cost in PHP"
+        data_tests:
+          - not_null
+
+
+  - name: monthly_pnl
+    description: "P/L per month"
+    columns:
+      - name: year_month
+        description: "calendar year and month with the format YYYY-MM"
+        data_tests:
+          - not_null
+      - name: expenses
+        description: "value in PHP"
+        data_tests:
+          - not_null
+      - name: income
+        description: "value in PHP"
+        data_tests:
+          - not_null
+      - name: savings
+        description: "savings in PHP"
+        data_tests:
+          - not_null
+      - name: running_savings
+        description: "cumulative value in PHP"
+        data_tests:
+          - not_null
+
+
+  - name: online_subscriptions
+    description: "contains all online subscriptions"
+    columns:
+      - name: id
+        description: "unique identifier"
+        constraints:
+          - type: primary_key
+        data_tests:
+          - unique
+          - not_null
+      - name: year_month
+        description: "calendar year and month in the format of YYYY-MM"
+      - name: to
+        description: "other party involved in the transaction"
+      - name: cost
+        description: "value in PHP"
+      - name: source
+        description: "source of funds"
+      - name: _inserted_at
+        description: "datetime in UTC+0 timezone"
+      - name: _is_deleted
+        description: "identifier if the record is deleted from source"
+        data_tests:
+          - not_null
+          - accepted_values:
+              values: [TRUE, FALSE]
+              quote: false
+
+
+  - name: yearly_clothes_expenses
+    description: "contains yearly clothes expenses"
+    columns:
+      - name: year
+        description: ""
+        data_tests:
+          - not_null
+      - name: cost
+        description: "yearly expense in PHP"
+        data_tests:
+          - not_null
+
+
+  - name: yearly_massage_expenses
+    description: "contains yearly massage expenses"
+    columns:
+      - name: year
+        description: ""
+        data_tests:
+          - not_null
+      - name: item
+        description: ""
+        data_tests:
+          - not_null
+          - accepted_values:
+              values: [
+                'MASSAGE',
+                'MASSAGE CHAIR'
+              ]
+              quote: true
+      - name: cost
+        description: "yearly expense in PHP"
+        data_tests:
+          - not_null
