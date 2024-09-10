@@ -1,0 +1,136 @@
+
+version: 2
+
+models:
+
+
+  - name: silver__finance__binary_type
+    description: "list of income and expenses sources"
+    columns:
+      - name: type
+        description: "type of transaction"
+      - name: binary_type
+        description: "can only be either `EXPENSES` or `INCOME`"
+        data_tests:
+          - not_null
+          - accepted_values:
+              values: [
+                'EXPENSES',
+                'INCOME'
+              ]
+  
+
+  - name: silver__finance__ledger_expenses
+    description: "part of the finance ledger that contains expenses only"
+    columns:
+      - name: id
+        description: "unique identifier"
+        constraints:
+          - type: primary_key
+        data_tests:
+          - unique
+          - not_null
+      - name: year_month
+        description: "calendar year and month in the format of YYYY-MM"
+      - name: date
+        description: ""
+      - name: item
+        description: ""
+      - name: type
+        description: "type of transaction"
+      - name: cost
+        description: "value in PHP"
+      - name: to
+        description: "other party involved in the transaction"
+      - name: store
+        description: "store if `to` column is an establishment"
+      - name: source
+        description: "source of funds"
+      - name: _created_at
+        description: "datetime in UTC+0 timezone"
+      - name: _updated_at
+        description: "datetime in UTC+0 timezone"
+      - name: _inserted_at
+        description: "datetime in UTC+0 timezone"
+      - name: _is_deleted
+        description: "identifier if the record is deleted from source"
+        data_tests:
+          - not_null
+          - accepted_values:
+              values: [TRUE, FALSE]
+              quote: false
+
+  
+  - name: silver__finance__ledger_income
+    description: "part of the finance ledger that contains income only"
+    columns:
+      - name: id
+        description: "unique identifier"
+        constraints:
+          - type: primary_key
+        data_tests:
+          - unique
+          - not_null
+      - name: year_month
+        description: "calendar year and month in the format of YYYY-MM"
+      - name: date
+        description: ""
+      - name: item
+        description: ""
+      - name: type
+        description: "type of transaction"
+      - name: cost
+        description: "value in PHP"
+      - name: to
+        description: "other party involved in the transaction"
+      - name: store
+        description: "store if `to` column is an establishment"
+      - name: source
+        description: "source of funds"
+      - name: _created_at
+        description: "datetime in UTC+0 timezone"
+      - name: _updated_at
+        description: "datetime in UTC+0 timezone"
+      - name: _inserted_at
+        description: "datetime in UTC+0 timezone"
+      - name: _is_deleted
+        description: "identifier if the record is deleted from source"
+        data_tests:
+          - not_null
+          - accepted_values:
+              values: [TRUE, FALSE]
+              quote: false
+
+
+  - name: silver__finance__monthly_expenses
+    description: "monthly expenses total (per type of expenses)"
+    columns:
+      - name: year_month
+        description: "calendar year and month in the format of YYYY-MM"
+        data_tests:
+          - not_null
+      - name: type
+        description: "type of transaction"
+        data_tests:
+          - not_null
+      - name: item
+        description: ""
+      - name: expenses
+        description: "expenses in PHP"
+
+
+  - name: silver__finance__monthly_income
+    description: "monthly income total (per type of income)"
+    columns:
+      - name: year_month
+        description: "calendar year and month in the format of YYYY-MM"
+        data_tests:
+          - not_null
+      - name: type
+        description: "type of transaction"
+        data_tests:
+          - not_null
+      - name: item
+        description: ""
+      - name: income
+        description: "income in PHP"
