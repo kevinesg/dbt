@@ -1,7 +1,11 @@
 {{ 
     config(
         materialized='incremental',
-        unique_key='id'
+        unique_key='id',
+        post_hook="""
+            DELETE FROM {{ this }}
+            WHERE _is_deleted
+        """
     ) 
 }}
 

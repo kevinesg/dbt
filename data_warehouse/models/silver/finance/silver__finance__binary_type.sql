@@ -35,5 +35,4 @@ SELECT DISTINCT
       END AS binary_type
 
 FROM {{ ref('stg__finance__ledger') }}
-
 ORDER BY binary_type

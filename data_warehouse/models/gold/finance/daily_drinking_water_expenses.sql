@@ -12,7 +12,9 @@ WITH water_expenses AS (
                             -- the logic in the next CTE works under the assumption
                             -- that there is max one instance per day
     FROM {{ ref('silver__finance__ledger_expenses') }}
-    WHERE item = 'WATER'
+    WHERE TRUE
+        AND NOT _is_deleted
+        AND item = 'WATER'
     GROUP BY 1
 )
 
