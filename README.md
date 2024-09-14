@@ -1,5 +1,22 @@
 # dbt
 
+## Introduction
+This git repository contains all dbt-core files post-installation and some dbt models. dbt is responsible for the transformation step of the ELT pipelines. The current (work in progress) lineage graph is shown below.
+![dbt lineage graph](https://i.imgur.com/dRfcUVQ.png)
+
+##
+## Table of Contents
+1. [Release Notes](#release-notes)
+2. [Pre-installation Notes](#pre-installation-notes)
+3. [Installation](#installation)
+4. [Folder Structure](#folder-structure)
+
+##
+## Release Notes
+* created initial setup of dbt repo and installation
+* added `_is_deleted` logic in finance models
+
+##
 ## Pre-installation Notes
 * Only `dbt-core` is used here (no `dbt cloud`).
 
@@ -76,18 +93,31 @@
         type: bigquery
     target: dev
     ````
-7. As you go along while creating dbt models, whenever you create a new folder inside `models/`, you might want to specify it in `models` inside `dbt_project.yml` as well. For example, if you want to create a finance dataset, it is good practice to create `models/finance/` which will store all finance dbt models. Then `dbt_project.yml` contains the following:
+7. As you go along while creating dbt models, whenever you create a new folder inside `models/`, you might want to specify it in `models` inside `dbt_project.yml` as well. For example, if you want to create a finance dataset, it is good practice to create `/finance/` under several folders (if you follow medallion architecture) which will store all finance dbt models. Then `dbt_project.yml` may contain this:
 ````
 models:
   data_warehouse:
-    dbt_staging:
+
+    staging_dbt:
+      finance:
+        +materialized: view
+        +schema: "{% if target.name == 'dev' %} dev_dbt {% else %} staging_dbt {% endif %}"
+    
+    silver:
+      finance:
+        +materialized: view
+        +schema: "{% if target.name == 'dev' %} dev_dbt {% else %} silver {% endif %}"
+    
+    gold:
+      finance:
+        +materialized: view
+        +schema: "{% if target.name == 'dev' %} dev_dbt {% else %} finance {% endif %}"
+    
+    utils:
       +materialized: view
-      +schema: dbt_staging
-    finance:
-      +materialized: view
-      +schema: finance
+      +schema: "{% if target.name == 'dev' %} dev_dbt {% else %} utils {% endif %}"
 ````
-* where `data_warehouse` is your dbt project, `dbt_staging` and `finance` are separate datasets. You can decide about the default table materialization (view, table, incremental, materialized view, etc.) and schema of the dbt models that will be inside these folders (under `models/dbt_staging` and `models/finance` in this case). These are just defaults and you can override them if needed by specifying `config {{ }}` at the top of a dbt model.
+* where `data_warehouse` is your dbt project. You can decide about the default table materialization (view, table, incremental, materialized view, etc.) and schema of the dbt models that will be inside these folders. These are just defaults and you can override them if needed by specifying `config {{ }}` at the top of a dbt model.
 
     ## Optional but recommended steps: 
 #
