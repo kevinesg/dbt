@@ -1,7 +1,8 @@
 # dbt
 
 ## Introduction
-This git repository contains all dbt-core files post-installation and some dbt models. dbt is responsible for the transformation step of the ELT pipelines. The current (work in progress) lineage graph is shown below.
+This git repository contains all dbt-core files post-installation and some dbt models. dbt is responsible for the transformation step of the ELT pipelines. The current (work in progress) lineage graph is shown below. The data catalog can be accessed at [dbt.kevinesg.com/data-catalog.html](https://dbt.kevinesg.com/data-catalog.html) (updated every hour).
+
 ![dbt lineage graph](https://i.imgur.com/dRfcUVQ.png)
 
 ##
@@ -13,8 +14,9 @@ This git repository contains all dbt-core files post-installation and some dbt m
 
 ##
 ## Release Notes
-* created initial setup of dbt repo and installation
-* added `_is_deleted` logic in finance models
+* 2024-09-10    created initial setup of dbt repo and installation
+* 2024-09-15    added `_is_deleted` logic in finance models
+* 2024-09-15    deployed data catalog to [dbt.kevinesg.com/data-catalog.html](https://dbt.kevinesg.com/data-catalog.html)
 
 ##
 ## Pre-installation Notes
